@@ -7,6 +7,8 @@ import News from "../pages/News/News/News";
 import LoginLayout from "../layouts/LoginLayout";
 import Login from "../pages/Login/Login/Login";
 import Register from "../pages/Login/Register/Register";
+import PrivateRoute from "./PrivateRoute";
+import Tums from "../pages/Shared/Tums/Tums";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path: 'register',
                 element: <Register></Register>
+            },
+            {
+                path: 'tums',
+                element:<Tums></Tums>
             }
         ]
     },
@@ -44,31 +50,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path: ':id',
-                element: <News></News>,
+                element: <PrivateRoute><News></News></PrivateRoute>,
                 loader: ({params}) => fetch(`http://localhost:5000/news/${params.id}`)
             }
         ]
     }, 
-    {
-        path: 'login',
-        element: <LoginLayout></LoginLayout>,
-        children: [
-            {
-                path: '/login',
-                element: <Login></Login>
-            }
-        ]
-    },
-    {
-        path: 'register',
-        element: <LoginLayout></LoginLayout>,
-        children: [
-        {
-            path: '/register',
-            element: <Register></Register>
-        }
-        ]
-    }
 ])
 
 export default router;
